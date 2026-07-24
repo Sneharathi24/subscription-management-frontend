@@ -28,7 +28,6 @@ function App() {
 
   const [formData, setFormData] = useState(initialFormState);
 
-  // Fetch subscriptions from REST API
   const fetchSubscriptions = async () => {
     try {
       setIsLoading(true);
@@ -69,9 +68,7 @@ function App() {
     return { text: `${diffDays} days`, isExpired: false };
   };
 
-  // Form Submission (Add or Update)
   const handleSave = async () => {
-    // Client-side validations matching SMS spec
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.user_email || !emailRegex.test(formData.user_email.trim())) {
       toast.error("Please enter a valid email address.");
@@ -109,7 +106,6 @@ function App() {
 
     try {
       if (!editingSub) {
-        // Create (POST)
         const res = await fetch(`${API_BASE_URL}/api/subscriptions`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -123,7 +119,6 @@ function App() {
 
         toast.success("Subscription added successfully!");
       } else {
-        // Update (PUT)
         const res = await fetch(
           `${API_BASE_URL}/api/subscriptions/${editingSub.subscription_id}`,
           {
